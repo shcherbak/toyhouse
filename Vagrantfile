@@ -115,9 +115,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     #puppet.manifests_path = "manifests"
     #puppet.manifest_file = "default.pp"
-    puppet.environment_path = "./environments"
-    puppet.environment = "vagrant"
-    puppet.options = "--verbose --debug"
+    puppet.manifests_path = "provision/manifests"
+    puppet.module_path    = "provision/modules"
+    puppet.manifest_file  = "site.pp"
   end
 
 end
