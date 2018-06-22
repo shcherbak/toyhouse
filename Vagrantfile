@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+unless Vagrant.has_plugin?("vagrant-vbguest")
+  raise 'some-plugin is not installed! try: vagrant plugin install vagrant-vbguest'
+end
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -98,6 +102,22 @@ Vagrant.configure("2") do |config|
   # |-- Vagrantfile
   # |-- manifests
   # |   |-- default.pp
-  config.vm.provision "puppet"
+  config.vm.provision "shell" do |s|
+    s.inline = "apt install puppet -y"
+  end
+
+
+  # $ vagrant --version
+  # Vagrant 1.9.1
+  # $ puppet --version
+  # 4.8.2
+
+  config.vm.provision "puppet" do |puppet|
+    #puppet.manifests_path = "manifests"
+    #puppet.manifest_file = "default.pp"
+    puppet.environment_path = "./environments"
+    puppet.environment = "vagrant"
+    puppet.options = "--verbose --debug"
+  end
 
 end

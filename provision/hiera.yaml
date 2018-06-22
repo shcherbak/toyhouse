@@ -1,0 +1,12 @@
+---
+:backends:
+  - yaml
+:yaml:
+  :datadir: /etc/puppet/hiera/
+:merge_behavior: deeper
+:hierarchy:
+  - "hosts/%{clientcert}"
+  - "domains/%{domain}/environments/%{environment}"
+  - "domains/%{domain}"
+  - "environments/%{environment}"
+  - "default"
