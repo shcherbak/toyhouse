@@ -50,10 +50,10 @@ Vagrant.configure("2") do |config|
   # via 127.0.0.1 to disable public access
   # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
   config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
-  config.vm.network :forwarded_port, guest: 80, host: 8080, id: 'http', host_ip: "127.0.0.1"
-  config.vm.network :forwarded_port, guest: 443, host: 8443, id: 'https', host_ip: "127.0.0.1"
-  config.vm.network :forwarded_port, guest: 3306, host: 13306, id: 'mysql', host_ip: "127.0.0.1"
-  config.vm.network :forwarded_port, guest: 9200, host: 19200, id: 'elasticsearch', host_ip: "127.0.0.1"
+  #config.vm.network :forwarded_port, guest: 80, host: 8080, id: 'http', host_ip: "127.0.0.1"
+  #config.vm.network :forwarded_port, guest: 443, host: 8443, id: 'https', host_ip: "127.0.0.1"
+  #config.vm.network :forwarded_port, guest: 3306, host: 13306, id: 'mysql', host_ip: "127.0.0.1"
+  #config.vm.network :forwarded_port, guest: 9200, host: 19200, id: 'elasticsearch', host_ip: "127.0.0.1"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
