@@ -1,10 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-unless Vagrant.has_plugin?("vagrant-vbguest")
-  raise 'some-plugin is not installed! try: vagrant plugin install vagrant-vbguest'
-end
-
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -35,9 +31,6 @@ Vagrant.configure("2") do |config|
   #
   # https://app.vagrantup.com/aspyatkin/boxes/ubuntu-16.04-server-amd64
   # A minimal Ubuntu 16.04.4 LTS Server installation built for VirtualBox 5.2.8 & Vagrant 2.0.3
-  #config.vm.box = "aspyatkin/ubuntu-16.04-server-amd64"
-  # https://app.vagrantup.com/debian/boxes/stretch64
-  # debian/stretch64 Vagrant box
   config.vm.box = "debian/stretch64"
   #config.disksize.size = "10GB"
 
@@ -57,10 +50,10 @@ Vagrant.configure("2") do |config|
   # via 127.0.0.1 to disable public access
   # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
   config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
-  #config.vm.network :forwarded_port, guest: 80, host: 8080, id: 'http', host_ip: "127.0.0.1"
-  #config.vm.network :forwarded_port, guest: 443, host: 8443, id: 'https', host_ip: "127.0.0.1"
-  #config.vm.network :forwarded_port, guest: 3306, host: 13306, id: 'mysql', host_ip: "127.0.0.1"
-  #config.vm.network :forwarded_port, guest: 9200, host: 19200, id: 'elasticsearch', host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, guest: 80, host: 8080, id: 'http', host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, guest: 443, host: 8443, id: 'https', host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, guest: 3306, host: 13306, id: 'mysql', host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, guest: 9200, host: 19200, id: 'elasticsearch', host_ip: "127.0.0.1"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -86,6 +79,7 @@ Vagrant.configure("2") do |config|
    config.vm.provider "virtualbox" do |vb|
      # Display the VirtualBox GUI when booting the machine
      #vb.gui = true
+
      # Customize the amount of memory on the VM:
      vb.memory = "2048"
    end
@@ -100,24 +94,20 @@ Vagrant.configure("2") do |config|
   #
   # .
   # |-- Vagrantfile
-  # |-- manifests
-  # |   |-- default.pp
-  config.vm.provision "shell" do |s|
-    s.inline = "apt install puppet -y"
-  end
-
-
-  # $ vagrant --version
-  # Vagrant 1.9.1
-  # $ puppet --version
-  # 4.8.2
-
-  config.vm.provision "puppet" do |puppet|
-    #puppet.manifests_path = "manifests"
-    #puppet.manifest_file = "default.pp"
-    puppet.manifests_path = "provision/manifests"
-    puppet.module_path    = "provision/modules"
-    puppet.manifest_file  = "site.pp"
+  # |-- provisioning
+  # |   |-- group_vars
+  # |           |-- all
+  # |   |-- roles
+  # |           |-- bar
+  # |           |-- foo
+  # |   |-- playbook.yml
+  config.vm.provision :ansible do |ansible|
+    ansible.limit = "vagrant-box"
+    ansible.playbook = "provisioning/vagrant.yml"
+    ansible.inventory_path = "provisioning/inventories/vagrant.yml"
+    ansible.extra_vars = {
+      ansible_python_interpreter: "/usr/bin/python3.5",
+    }
   end
 
 end

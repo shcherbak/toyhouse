@@ -1,0 +1,10 @@
+---
+
+default_system_packages:
+  - "mc"
+  - "htop"
+  - "git"
+  - "vim"
+#  - "aptitude"
+
+default_system_hostname: "{{ inventory_hostname }}"

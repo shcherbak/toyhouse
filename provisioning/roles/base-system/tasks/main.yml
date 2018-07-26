@@ -1,0 +1,50 @@
+---
+
+- name: "{{ role_path|basename }} setting execution facts"
+  set_fact:
+    __system_packages: "{{ system_packages | default(default_system_packages) }}"
+    __system_hostname: "{{ system_hostname | default(default_system_hostname) }}"
+  run_once: true
+  become: no
+  tags:
+    - "always"
+
+- name: "{{ role_path|basename }} fix ansible fails on aptitude not found https://github.com/ansible/ansible/issues/16884"
+  raw: apt-get install python-minimal aptitude -y
+#raw: apt-get install python-minimal aptitude -y
+
+- name: "{{ role_path|basename }} updating repository cache"
+  apt:
+    update_cache: yes
+  tags:
+    - "base-system-upgrade"
+
+- name: "{{ role_path|basename }} upgrading packages"
+  apt:
+    upgrade: yes
+    state: "latest"
+    force: yes
+  tags:
+    - "base-system-upgrade"
+
+- name: "{{ role_path|basename }} installing required packages"
+  apt:
+    name: "{{ item }}"
+    state: "present"
+  with_items:
+    - "{{ __system_packages }}"
+
+- name: "{{ role_path|basename }} configuring hostname"
+  template:
+    src: "etc/hostname.j2"
+    dest: "/etc/hostname"
+  tags:
+    - "base-system-hostname"
+
+- name: "{{ role_path|basename }} configuring vim"
+  template:
+    src: "etc/vim/vimrc.local.j2"
+    dest: "/etc/vim/vimrc.local"
+    owner: "root"
+    group: "root"
+    mode: "0644"
