@@ -1,0 +1,16 @@
+---
+
+#default_puppet5_apt_key_url: "https://apt.puppetlabs.com/DEB-GPG-KEY-puppetlabs"
+
+default_puppet5_dependencies:
+  - "apt-transport-https"
+  - "ca-certificates"
+  - "dirmngr"
+
+default_puppet5_apt_key_id: "7F438280EF8D349F"
+
+default_puppet5_apt_key_server: "keyserver.ubuntu.com"
+
+default_puppet5_repositories:
+  - "deb http://apt.puppetlabs.com {{ ansible_distribution_release }} puppet5"
+#  - "deb-src http://apt.puppetlabs.com {{ ansible_distribution_release }} puppet5"

@@ -1,0 +1,32 @@
+---
+- name: "{{ role_path|basename }} setting execution facts"
+  set_fact:
+    __puppet5_dependencies: "{{ puppet5_dependencies | default(default_puppet5_dependencies) }}"
+    __puppet5_apt_key_id: "{{ puppet5_apt_key_id | default(default_puppet5_apt_key_id) }}"
+    __puppet5_apt_key_server: "{{ puppet5_apt_key_server | default(default_puppet5_apt_key_server) }}"
+    __puppet5_repositories: "{{ puppet5_repositories | default(default_puppet5_repositories) }}"
+  run_once: true
+  become: no
+  tags:
+    - "always"
+
+- name: "{{ role_path|basename }} installing dependencies"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ __puppet5_dependencies }}"
+
+- name: "{{ role_path|basename }} importing apt key"
+  apt_key:
+    id: "{{ __puppet5_apt_key_id }}"
+    keyserver: "{{ __puppet5_apt_key_server }}"
+    state: "present"
+
+- name: "{{ role_path|basename }} adding repositories"
+  apt_repository:
+    repo: "{{ item }}"
+    state: "present"
+    update_cache: yes
+  with_items:
+    - "{{ __puppet5_repositories }}"
