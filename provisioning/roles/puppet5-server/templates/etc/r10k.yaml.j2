@@ -1,0 +1,9 @@
+:cachedir: '/var/cache/r10k'
+# git repositories containing environments
+:sources:
+  :base:
+    remote: 'ssh://git@git.slygods.com:777/puppet5/puppet-configs.git'
+    basedir: '/etc/puppetlabs/code/environments'
+# purge non-existing environments found here
+:purgedirs:
+  - '/etc/puppetlabs/code'
