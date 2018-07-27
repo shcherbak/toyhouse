@@ -26,12 +26,13 @@
   with_items:
     - "{{ __puppet5_server_packages }}"
 
-#- name: "{{ role_path|basename }} copy configuration files"
-#  template:
-#    src: "{{ item }}.j2"
-#    dest: "/{{ item }}"
-#    owner: "root"
-#    group: "root"
-#    mode: "0644"
-#  with_items:
-#    - "etc/puppetlabs/puppet/puppet.conf"
+- name: "{{ role_path|basename }} copy configuration files"
+  template:
+    src: "{{ item }}.j2"
+    dest: "/{{ item }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  with_items:
+    - "etc/default/puppetserver"
+  notify: [ "Restart puppetserver service" ]
