@@ -35,4 +35,5 @@
     mode: "0644"
   with_items:
     - "etc/default/puppetserver"
+    - "etc/r10k.yaml"
   notify: [ "Restart puppetserver service" ]
