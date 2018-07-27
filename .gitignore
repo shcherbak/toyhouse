@@ -1,6 +1,9 @@
 # vagrant
 .vagrant
 
+# ansible retry files
+*.retry
+
 # phpstorm project files
 .idea
 
