@@ -1,0 +1,17 @@
+[master]
+bindaddress = {{ __puppet5_agent_conf_bindaddress }}
+vardir = {{ __puppet5_agent_conf_vardir }}
+logdir = {{ __puppet5_agent_conf_logdir }}
+rundir = {{ __puppet5_agent_conf_rundir }}
+pidfile = {{ __puppet5_agent_conf_pidfile }}
+codedir = {{ __puppet5_agent_conf_codedir }}
+environmentpath = {{ __puppet5_agent_conf_environmentpath }}
+
+[main]
+server = {{ __puppet5_agent_conf_server }}
+environment = {{ __puppet5_agent_conf_environment }}
+report = {{ __puppet5_agent_conf_report }}
+
+[agent]
+graph = {{ __puppet5_agent_conf_graph }}
+graphdir = {{ __puppet5_agent_conf_graphdir }}
