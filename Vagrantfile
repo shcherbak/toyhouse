@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
   #
   # https://app.vagrantup.com/aspyatkin/boxes/ubuntu-16.04-server-amd64
   # A minimal Ubuntu 16.04.4 LTS Server installation built for VirtualBox 5.2.8 & Vagrant 2.0.3
-  config.vm.box = "debian/stretch64"
+  #config.vm.box = "debian/stretch64"
   #config.disksize.size = "10GB"
 
   # Disable automatic box update checking. If you disable this, then
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
   # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
-  config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
+  #config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
   #config.vm.network :forwarded_port, guest: 80, host: 8080, id: 'http', host_ip: "127.0.0.1"
   #config.vm.network :forwarded_port, guest: 443, host: 8443, id: 'https', host_ip: "127.0.0.1"
   #config.vm.network :forwarded_port, guest: 3306, host: 13306, id: 'mysql', host_ip: "127.0.0.1"
@@ -101,13 +101,34 @@ Vagrant.configure("2") do |config|
   # |           |-- bar
   # |           |-- foo
   # |   |-- playbook.yml
-  config.vm.provision :ansible do |ansible|
-    ansible.limit = "vagrant-box"
-    ansible.playbook = "provisioning/vagrant.yml"
-    ansible.inventory_path = "provisioning/inventories/vagrant.yml"
-    ansible.extra_vars = {
-      ansible_python_interpreter: "/usr/bin/python3.5",
-    }
+  config.vm.define "puppet-master" do |pm|
+    pm.vm.box = "debian/stretch64"
+    pm.vm.hostname = "puppet-master"
+    pm.vm.network :forwarded_port, guest: 22, host: 2422, id: 'ssh'
+    pm.vm.network :private_network, ip: "172.16.32.10"
+    pm.vm.provision :ansible do |pm_ansible|
+      pm_ansible.limit = "puppet-master"
+      pm_ansible.playbook = "provisioning/puppet-master.yml"
+      pm_ansible.inventory_path = "provisioning/inventories/vagrant.yml"
+      pm_ansible.extra_vars = {
+        ansible_python_interpreter: "/usr/bin/python3.5",
+      }
+    end
+  end
+
+  config.vm.define "puppet-agent" do |pa|
+    pa.vm.box = "debian/stretch64"
+    pa.vm.hostname = "puppet-agent"
+    pa.vm.network :forwarded_port, guest: 22, host: 2522, id: 'ssh'
+    pa.vm.network :private_network, ip: "172.16.32.11"
+    pa.vm.provision :ansible do |pa_ansible|
+      pa_ansible.limit = "puppet-agent"
+      pa_ansible.playbook = "provisioning/puppet-agent.yml"
+      pa_ansible.inventory_path = "provisioning/inventories/vagrant.yml"
+      pa_ansible.extra_vars = {
+        ansible_python_interpreter: "/usr/bin/python3.5",
+      }
+    end
   end
 
 end
