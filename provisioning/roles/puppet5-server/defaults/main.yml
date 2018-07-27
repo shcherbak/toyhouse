@@ -3,6 +3,7 @@
 default_puppet5_server_packages:
   - "openjdk-8-jdk-headless"
   - "puppetserver"
+  - "r10k"
 
 default_puppet5_server_conf_bindaddress: "0.0.0.0"
 default_puppet5_server_conf_vardir: "/opt/puppetlabs/server/data/puppetserver"
