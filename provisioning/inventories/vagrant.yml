@@ -1,2 +1,3 @@
 [vagrant]
-vagrant-box ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
+puppet-master ansible_ssh_host=127.0.0.1 ansible_ssh_port=2422
+puppet-agent ansible_ssh_host=127.0.0.1 ansible_ssh_port=2522
