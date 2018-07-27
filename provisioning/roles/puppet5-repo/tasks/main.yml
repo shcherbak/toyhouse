@@ -1,10 +1,10 @@
 ---
 - name: "{{ role_path|basename }} setting execution facts"
   set_fact:
-    __puppet5_dependencies: "{{ puppet5_dependencies | default(default_puppet5_dependencies) }}"
-    __puppet5_apt_key_id: "{{ puppet5_apt_key_id | default(default_puppet5_apt_key_id) }}"
-    __puppet5_apt_key_server: "{{ puppet5_apt_key_server | default(default_puppet5_apt_key_server) }}"
-    __puppet5_repositories: "{{ puppet5_repositories | default(default_puppet5_repositories) }}"
+    __puppet5_repo_dependencies: "{{ puppet5_repo_dependencies | default(default_puppet5_repo_dependencies) }}"
+    __puppet5_repo_apt_key_id: "{{ puppet5_repo_apt_key_id | default(default_puppet5_repo_apt_key_id) }}"
+    __puppet5_repo_apt_key_server: "{{ puppet5_repo_apt_key_server | default(default_puppet5_repo_apt_key_server) }}"
+    __puppet5_repo_repositories: "{{ puppet5_repo_repositories | default(default_puppet5_repo_repositories) }}"
   run_once: true
   become: no
   tags:
@@ -15,12 +15,12 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - "{{ __puppet5_dependencies }}"
+    - "{{ __puppet5_repo_dependencies }}"
 
 - name: "{{ role_path|basename }} importing apt key"
   apt_key:
-    id: "{{ __puppet5_apt_key_id }}"
-    keyserver: "{{ __puppet5_apt_key_server }}"
+    id: "{{ __puppet5_repo_apt_key_id }}"
+    keyserver: "{{ __puppet5_repo_apt_key_server }}"
     state: "present"
 
 - name: "{{ role_path|basename }} adding repositories"
@@ -29,4 +29,4 @@
     state: "present"
     update_cache: yes
   with_items:
-    - "{{ __puppet5_repositories }}"
+    - "{{ __puppet5_repo_repositories }}"
