@@ -1,0 +1,18 @@
+---
+
+default_puppet5_server_packages:
+  - "openjdk-8-jdk-headless"
+  - "puppetserver"
+
+default_puppet5_server_conf_bindaddress: "0.0.0.0"
+default_puppet5_server_conf_vardir: "/opt/puppetlabs/server/data/puppetserver"
+default_puppet5_server_conf_logdir: "/var/log/puppetlabs/puppetserver"
+default_puppet5_server_conf_rundir: "/var/run/puppetlabs/puppetserver"
+default_puppet5_server_conf_pidfile: "/var/run/puppetlabs/puppetserver/puppetserver.pid"
+default_puppet5_server_conf_codedir: "/etc/puppetlabs/code"
+default_puppet5_server_conf_environmentpath: "$codedir/override_environments:$codedir/environments"
+default_puppet5_server_conf_server: "puppet5.smen.space"
+default_puppet5_server_conf_environment: "production"
+default_puppet5_server_conf_report: true
+default_puppet5_server_conf_graph: false
+default_puppet5_server_conf_graphdir: "/etc/puppetlabs/graphs"

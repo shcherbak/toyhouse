@@ -1,0 +1,37 @@
+---
+- name: "{{ role_path|basename }} setting execution facts"
+  set_fact:
+    __puppet5_server_packages: "{{ puppet5_server_packages | default(default_puppet5_server_packages) }}"
+    __puppet5_server_conf_bindaddress: "{{ puppet5_server_conf_bindaddress | default(default_puppet5_server_conf_bindaddress) }}"
+    __puppet5_server_conf_vardir: "{{ puppet5_server_conf_vardir | default(default_puppet5_server_conf_vardir) }}"
+    __puppet5_server_conf_logdir: "{{ puppet5_server_conf_logdir | default(default_puppet5_server_conf_logdir) }}"
+    __puppet5_server_conf_rundir: "{{ puppet5_server_conf_rundir | default(default_puppet5_server_conf_rundir) }}"
+    __puppet5_server_conf_pidfile: "{{ puppet5_server_conf_pidfile | default(default_puppet5_server_conf_pidfile) }}"
+    __puppet5_server_conf_codedir: "{{ puppet5_server_conf_codedir | default(default_puppet5_server_conf_codedir) }}"
+    __puppet5_server_conf_environmentpath: "{{ puppet5_server_conf_environmentpath | default(default_puppet5_server_conf_environmentpath) }}"
+    __puppet5_server_conf_server: "{{ puppet5_server_conf_server | default(default_puppet5_server_conf_server) }}"
+    __puppet5_server_conf_environment: "{{ puppet5_server_conf_environment | default(default_puppet5_server_conf_environment) }}"
+    __puppet5_server_conf_report: "{{ puppet5_server_conf_report | default(default_puppet5_server_conf_report) }}"
+    __puppet5_server_conf_graph: "{{ puppet5_server_conf_graph | default(default_puppet5_server_conf_graph) }}"
+    __puppet5_server_conf_graphdir: "{{ puppet5_server_conf_graphdir | default(default_puppet5_server_conf_graphdir) }}"
+  run_once: true
+  become: no
+  tags:
+    - "always"
+
+- name: "{{ role_path|basename }} installing required packages"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ __puppet5_server_packages }}"
+
+#- name: "{{ role_path|basename }} copy configuration files"
+#  template:
+#    src: "{{ item }}.j2"
+#    dest: "/{{ item }}"
+#    owner: "root"
+#    group: "root"
+#    mode: "0644"
+#  with_items:
+#    - "etc/puppetlabs/puppet/puppet.conf"

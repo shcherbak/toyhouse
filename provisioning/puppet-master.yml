@@ -7,3 +7,4 @@
    roles:
     - base-system
     - puppet5-repo
+    - puppet5-server
