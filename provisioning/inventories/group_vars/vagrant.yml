@@ -1,1 +1,2 @@
 # vagrant vars
+puppet5_agent_conf_server: "puppet-master.sot.com"

@@ -14,6 +14,7 @@
     __puppet5_agent_conf_report: "{{ puppet5_agent_conf_report | default(default_puppet5_agent_conf_report) }}"
     __puppet5_agent_conf_graph: "{{ puppet5_agent_conf_graph | default(default_puppet5_agent_conf_graph) }}"
     __puppet5_agent_conf_graphdir: "{{ puppet5_agent_conf_graphdir | default(default_puppet5_agent_conf_graphdir) }}"
+    __puppet5_agent_conf_certname: "{{ puppet5_agent_conf_certname | default(default_puppet5_agent_conf_certname) }}"
   run_once: true
   become: no
   tags:
