@@ -17,3 +17,7 @@ default_puppet5_server_conf_environment: "production"
 default_puppet5_server_conf_report: true
 default_puppet5_server_conf_graph: false
 default_puppet5_server_conf_graphdir: "/etc/puppetlabs/graphs"
+default_puppet5_server_r10k_cachedir: "/var/cache/r10k"
+default_puppet5_server_r10k_remote: "https://github.com/shcherbak/vagrant-puppet-configs.git"
+default_puppet5_server_r10k_basedir: "/etc/puppetlabs/code/environments"
+default_puppet5_server_r10k_purgedirs: "/etc/puppetlabs/code"

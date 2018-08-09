@@ -14,6 +14,10 @@
     __puppet5_server_conf_report: "{{ puppet5_server_conf_report | default(default_puppet5_server_conf_report) }}"
     __puppet5_server_conf_graph: "{{ puppet5_server_conf_graph | default(default_puppet5_server_conf_graph) }}"
     __puppet5_server_conf_graphdir: "{{ puppet5_server_conf_graphdir | default(default_puppet5_server_conf_graphdir) }}"
+    __puppet5_server_r10k_cachedir: "{{ puppet5_server_r10k_cachedir | default(default_puppet5_server_r10k_cachedir) }}"
+    __puppet5_server_r10k_remote: "{{ puppet5_server_r10k_remote | default(default_puppet5_server_r10k_remote) }}"
+    __puppet5_server_r10k_basedir: "{{ puppet5_server_r10k_basedir | default(default_puppet5_server_r10k_basedir) }}"
+    __puppet5_server_r10k_purgedirs: "{{ puppet5_server_r10k_purgedirs | default(default_puppet5_server_r10k_purgedirs) }}"
   run_once: true
   become: no
   tags:
